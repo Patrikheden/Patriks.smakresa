@@ -33,6 +33,9 @@ import androidx.compose.material3.Button
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.collectAsState
+import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
+import androidx.compose.ui.Alignment
 
 data class RecipeItem(
     val id: String = UUID.randomUUID().toString(),
@@ -111,8 +114,16 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(recipes) { recipe ->
-                Text(text = "${recipe.title} (${recipe.category})")
+            items(recipes, key = { it.id }) { recipe ->
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(
+                            checked = recipe.isCooked,
+                            onCheckedChange = { viewModel.toggleCooked(recipe.id) }
+                        )
+                        Text(text = "${recipe.title} (${recipe.category})")
+                    }
+                }
             }
         }
 
