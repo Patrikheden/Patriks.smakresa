@@ -44,6 +44,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.Stroke
+
 
 data class RecipeItem(
     val id: String = UUID.randomUUID().toString(),
@@ -62,8 +69,20 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                             topBar = {
-                        TopAppBar(title = { Text("Patriks Smakresa") })
-                    }
+                                val uriHandler = LocalUriHandler.current
+                                TopAppBar(
+                                    title = { Text("Patriks Smakresa") },
+                                    actions = {
+                                        IconButton(
+                                            onClick = {
+                                                uriHandler.openUri("https://www.instagram.com/patriks.smakresa/")
+                                            }
+                                        ) {
+                                            InstagramIcon()
+                                        }
+                                    }
+                                )
+                            }
                 ) { innerPadding ->
                     Greeting(
                         name = "Android",
@@ -216,5 +235,28 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
 fun GreetingPreview() {
     PatrikssmakresaTheme {
         Greeting("Android")
+    }
+}
+
+@Composable
+fun InstagramIcon() {
+    val iconColor = androidx.compose.material3.LocalContentColor.current
+    Canvas(modifier = Modifier.size(22.dp)) {
+        val strokeWidth = size.minDimension * 0.1f
+        drawRoundRect(
+            color = iconColor,
+            style = Stroke(width = strokeWidth),
+            cornerRadius = CornerRadius(size.minDimension * 0.28f)
+        )
+        drawCircle(
+            color = iconColor,
+            radius = size.minDimension * 0.23f,
+            style = Stroke(width = strokeWidth)
+        )
+        drawCircle(
+            color = iconColor,
+            radius = size.minDimension * 0.06f,
+            center = Offset(size.width * 0.75f, size.height * 0.25f)
+        )
     }
 }
