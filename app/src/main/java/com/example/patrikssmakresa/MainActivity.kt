@@ -47,6 +47,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -68,22 +69,31 @@ class MainActivity : ComponentActivity() {
             PatrikssmakresaTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                            topBar = {
-                                val uriHandler = LocalUriHandler.current
-                                TopAppBar(
-                                    title = { Text("Patriks Smakresa") },
-                                    actions = {
-                                        IconButton(
-                                            onClick = {
-                                                uriHandler.openUri("https://www.instagram.com/patriks.smakresa/")
-                                            }
-                                        ) {
-                                            InstagramIcon()
+                    topBar = {
+                    val uriHandler = LocalUriHandler.current
+                        TopAppBar(
+                            title = {
+                                Column {
+                                    Text(text = "Patriks Smakresa")
+                                    Text(
+                                        text = "Mina recept & vintips",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(
+                                    onClick = {
+                                        uriHandler.openUri("https://www.instagram.com/patriks.smakresa/")
+                                    }
+                                ) {
+                                    InstagramIcon()
                                         }
                                     }
                                 )
                             }
-                ) { innerPadding ->
+                ){ innerPadding ->
                     Greeting(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
@@ -97,12 +107,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewModel()) {
     var titleInput by remember { mutableStateOf("") }
-    val categories = listOf("Pizza", "Varmrätt", "Vin", "Övrigt")
-    var selectedCategory by remember { mutableStateOf("Pizza") }
+    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Övrigt")
+    var selectedCategory by remember { mutableStateOf("Kött") }
     val recipes by viewModel.recipes.collectAsState()
     var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
     var editTitleInput by remember { mutableStateOf("") }
-    var editCategoryInput by remember { mutableStateOf("Pizza") }
+    var editCategoryInput by remember { mutableStateOf("Kött") }
 
     Column(modifier = modifier.padding(16.dp)) {
         OutlinedTextField(
