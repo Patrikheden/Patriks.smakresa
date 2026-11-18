@@ -59,6 +59,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.shape.CircleShape
 
 
 data class RecipeItem(
@@ -113,11 +116,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewModel()) {
     var titleInput by remember { mutableStateOf("") }
-    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Övrigt")
+    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Vego", "Övr" )
     var selectedCategory by remember { mutableStateOf("Kött") }
     val recipes by viewModel.recipes.collectAsState()
     var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
@@ -132,17 +135,42 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
             label = { Text("Rätt eller vintips...") },
             modifier = Modifier.fillMaxWidth()
         )
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+
+        Spacer(modifier = Modifier.height(8.dp))
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
             categories.forEach { category ->
-                FilterChip(
-                    selected = selectedCategory == category,
+                val isSelected = selectedCategory == category
+                val (bgColor, textColor) = when (category) {
+                    "Kött" -> androidx.compose.ui.graphics.Color(0xFF7D8E74) to androidx.compose.ui.graphics.Color.White
+                    "Vin" -> androidx.compose.ui.graphics.Color(0xFF5D1A2B) to androidx.compose.ui.graphics.Color.White
+                    "Fisk" -> androidx.compose.ui.graphics.Color(0xFFD9C59A) to androidx.compose.ui.graphics.Color(0xFF3E352A)
+                    "Fågel" -> androidx.compose.ui.graphics.Color(0xFF7A5C38) to androidx.compose.ui.graphics.Color.White
+                    "Vego" -> androidx.compose.ui.graphics.Color(0xFFD6CFC7) to androidx.compose.ui.graphics.Color(0xFF3E352A)
+                    else -> androidx.compose.ui.graphics.Color(0xFFE5DEC9) to androidx.compose.ui.graphics.Color(0xFF3E352A)
+                }
+
+                androidx.compose.material3.Surface(
                     onClick = { selectedCategory = category },
-                    label = { Text(category) }
-                )
+                    shape = CircleShape,
+                    color = bgColor,
+                    border = if (isSelected) {
+                        androidx.compose.foundation.BorderStroke(2.5.dp, androidx.compose.ui.graphics.Color(0xFF2B2623))
+                    } else null
+                ) {
+                    Text(
+                        text = category,
+                        color = textColor,
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp)
+                    )
+                }
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
         Button(
             onClick = {
                 if (titleInput.isNotBlank()) {
@@ -203,9 +231,12 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
 
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "${recipe.title} (${recipe.category})",
+                                    text = recipe.title,
                                     style = MaterialTheme.typography.titleMedium
                                 )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                CategoryBadge(category = recipe.category)
+
                                 if (isExpanded && recipe.notes.isNotBlank()) {
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
@@ -322,6 +353,29 @@ fun InstagramIcon() {
             color = iconColor,
             radius = size.minDimension * 0.06f,
             center = Offset(size.width * 0.75f, size.height * 0.25f)
+        )
+    }
+}
+
+@Composable
+fun CategoryBadge(category: String) {
+    val (bgColor, textColor) = when (category) {
+        "Kött" -> androidx.compose.ui.graphics.Color(0xFF7D8E74) to androidx.compose.ui.graphics.Color.White
+        "Vin" -> androidx.compose.ui.graphics.Color(0xFF5D1A2B) to androidx.compose.ui.graphics.Color.White
+        "Fisk" -> androidx.compose.ui.graphics.Color(0xFFD9C59A) to androidx.compose.ui.graphics.Color(0xFF3E352A)
+        "Fågel" -> androidx.compose.ui.graphics.Color(0xFF7A5C38) to androidx.compose.ui.graphics.Color.White
+        "Vego" -> androidx.compose.ui.graphics.Color(0xFFD6CFC7) to androidx.compose.ui.graphics.Color(0xFF3E352A)
+        else -> androidx.compose.ui.graphics.Color(0xFFE5DEC9) to androidx.compose.ui.graphics.Color(0xFF3E352A)
+    }
+    androidx.compose.material3.Surface(
+        color = bgColor,
+        shape = RoundedCornerShape(6.dp)
+    ) {
+        Text(
+            text = category,
+            color = textColor,
+            style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
         )
     }
 }
