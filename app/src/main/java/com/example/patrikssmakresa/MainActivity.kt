@@ -46,17 +46,25 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 
 
 data class RecipeItem(
     val id: String = UUID.randomUUID().toString(),
     val title: String,
     val category: String,
+    val notes: String = "",
+    val imageResId: Int? = null,
     val isCooked: Boolean = false
 )
 
@@ -74,7 +82,7 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = {
                                 Column {
-                                    Text(text = "Patriks Smakresa")
+                                    Text(text = "Patriks.Smakresa")
                                     Text(
                                         text = "Mina recept & vintips",
                                         style = MaterialTheme.typography.bodySmall,
@@ -171,6 +179,23 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                             Checkbox(
                                 checked = recipe.isCooked,
                                 onCheckedChange = { viewModel.toggleCooked(recipe.id) }
+                            )
+
+                            recipe.imageResId?.let { resId ->
+                                        Image(
+                                            painter = painterResource(id = resId),
+                                            contentDescription = recipe.title,
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .size(64.dp)
+                                                .clip(RoundedCornerShape(10.dp))
+                                        )
+                                        Spacer(modifier = Modifier.width(12.dp))
+                                    }
+
+                                Text(
+                                    text = "${recipe.title} (${recipe.category})",
+                                    modifier = Modifier.weight(1f)
                             )
                             Text(
                                 text = "${recipe.title} (${recipe.category})",

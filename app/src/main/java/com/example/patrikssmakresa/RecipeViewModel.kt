@@ -7,8 +7,36 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class RecipeViewModel : ViewModel() {
-
-    private val _recipes = MutableStateFlow<List<RecipeItem>>(emptyList())
+    private val _recipes = MutableStateFlow(
+        listOf(
+            RecipeItem(
+                title = "Boeuf Bourguignon",
+                category = "Kött",
+                notes = "Långkokt högrev i en mustig rödvinssås med sidfläsk, svamp, morötter och lök, serverad potatispuré toppad med rostad panko, citronzest och persilja",
+                        imageResId = R.drawable.boeuf_bourguignon
+            ),
+            RecipeItem(
+                title = "Chicken Tikka Masala-spett med naan",
+                category = "Fågel",
+                notes = "Marinera kyckling i yoghurt och kryddor över natten. Servera med krämig tomatsås och nygräddat naan."
+            ),
+            RecipeItem(
+                title = "Ramen",
+                category = "Övrigt",
+                notes = "En smakrik buljong, tuggiga nudlar och den mest fantastiska ”sticky mince” (karamelliserad färs) som toppning"
+            ),
+            RecipeItem(
+                title = "Bourgogne Pinot Noir",
+                category = "Vin",
+                notes = "Sval, bärig och elegant med fin syra – passar grymt bra till både fågel och lättare kötträtter."
+            ),
+            RecipeItem(
+                title = "Hummerpasta",
+                category = "Fisk",
+                notes = "En silkeslen hummersås reducerad på skaldjursskal, morot, selleri, konjak och grädde, toppad med smörslungat hummerkött och gräslök. Ackompanjeras av rostat vitlöksbröd och ett passande vitt vin."
+            )
+        )
+    )
     val recipes: StateFlow<List<RecipeItem>> = _recipes.asStateFlow()
 
     fun addRecipe(title: String, category: String) {
