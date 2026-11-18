@@ -16,24 +16,28 @@ class RecipeViewModel : ViewModel() {
                         imageResId = R.drawable.boeuf_bourguignon
             ),
             RecipeItem(
-                title = "Chicken Tikka Masala-spett med naan",
+                title = "Chicken Tikka Masala-spett",
                 category = "Fågel",
-                notes = "Marinera kyckling i yoghurt och kryddor över natten. Servera med krämig tomatsås och nygräddat naan."
+                notes = "Marinera kyckling i yoghurt och kryddor över natten. Servera med krämig tomatsås och nygräddat naan.",
+                imageResId = R.drawable.tikamasala
             ),
             RecipeItem(
                 title = "Ramen",
                 category = "Övrigt",
-                notes = "En smakrik buljong, tuggiga nudlar och den mest fantastiska ”sticky mince” (karamelliserad färs) som toppning"
+                notes = "En smakrik buljong, tuggiga nudlar och den mest fantastiska ”sticky mince” (karamelliserad färs) som toppning",
+                imageResId = R.drawable.ramen
             ),
             RecipeItem(
-                title = "Bourgogne Pinot Noir",
+                title = "Pure Altitude Chardonnay 2025",
                 category = "Vin",
-                notes = "Sval, bärig och elegant med fin syra – passar grymt bra till både fågel och lättare kötträtter."
+                notes = "En krispig, elegant och otroligt härlig chardonnay",
+                imageResId = R.drawable.vinpurealtitude
             ),
             RecipeItem(
                 title = "Hummerpasta",
                 category = "Fisk",
-                notes = "En silkeslen hummersås reducerad på skaldjursskal, morot, selleri, konjak och grädde, toppad med smörslungat hummerkött och gräslök. Ackompanjeras av rostat vitlöksbröd och ett passande vitt vin."
+                notes = "En silkeslen hummersås reducerad på skaldjursskal, morot, selleri, konjak och grädde, toppad med smörslungat hummerkött och gräslök. Ackompanjeras av rostat vitlöksbröd och ett passande vitt vin.",
+                imageResId = R.drawable.hummerpasta
             )
         )
     )

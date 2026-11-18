@@ -50,6 +50,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
@@ -169,11 +171,16 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(recipes, key = { it.id }) { recipe ->
-                    Card(modifier = Modifier.fillMaxWidth()) {
+                    var isExpanded by remember { mutableStateOf(false) }
+
+                    Card(
+                        onClick = { if (recipe.notes.isNotBlank()) isExpanded = !isExpanded },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(end = 8.dp),
+                                .padding(vertical = 8.dp, horizontal = 4.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Checkbox(
@@ -191,16 +198,31 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                                                 .clip(RoundedCornerShape(10.dp))
                                         )
                                         Spacer(modifier = Modifier.width(12.dp))
-                                    }
+                            }
 
+                            Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = "${recipe.title} (${recipe.category})",
-                                    modifier = Modifier.weight(1f)
-                            )
-                            Text(
-                                text = "${recipe.title} (${recipe.category})",
-                                modifier = Modifier.weight(1f)
-                            )
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                if (isExpanded && recipe.notes.isNotBlank()) {
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+
+                                        text = recipe.notes,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+
+                            if (recipe.notes.isNotBlank()) {
+                                Icon(
+                                    imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                                    contentDescription = if (isExpanded) "Fäll ihop" else "Visa notering",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                             IconButton(onClick = {
                                 editingRecipe = recipe
                                 editTitleInput = recipe.title
