@@ -4,65 +4,72 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.example.patrikssmakresa.ui.theme.PatrikssmakresaTheme
-import java.util.UUID
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.material3.TopAppBar
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Button
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.collectAsState
-import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.IconButton
-import androidx.compose.ui.Alignment
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
-import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.shape.CircleShape
-
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.patrikssmakresa.ui.theme.PatrikssmakresaTheme
+import java.util.UUID
 
 data class RecipeItem(
     val id: String = UUID.randomUUID().toString(),
@@ -82,16 +89,22 @@ class MainActivity : ComponentActivity() {
             PatrikssmakresaTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
+                    containerColor = Color(0xFFFBF8F3),
                     topBar = {
-                    val uriHandler = LocalUriHandler.current
+                        val uriHandler = LocalUriHandler.current
                         TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color(0xFFDCD1BF),
+                                titleContentColor = Color(0xFF2B2623),
+                                actionIconContentColor = Color(0xFF2B2623)
+                            ),
                             title = {
                                 Column {
                                     Text(text = "Patriks.Smakresa")
                                     Text(
                                         text = "Mina recept & vintips",
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = Color(0xFF3E352A)
                                     )
                                 }
                             },
@@ -102,13 +115,12 @@ class MainActivity : ComponentActivity() {
                                     }
                                 ) {
                                     InstagramIcon()
-                                        }
-                                    }
-                                )
+                                }
                             }
-                ){ innerPadding ->
+                        )
+                    }
+                ) { innerPadding ->
                     Greeting(
-                        name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -116,16 +128,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewModel()) {
+fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewModel()) {
     var titleInput by remember { mutableStateOf("") }
-    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Vego", "Övr" )
+    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Vego", "Övr")
     var selectedCategory by remember { mutableStateOf("Kött") }
     val recipes by viewModel.recipes.collectAsState()
     var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
     var editTitleInput by remember { mutableStateOf("") }
-    var editCategoryInput by remember { mutableStateOf("Kött") }
     var editNotesInput by remember { mutableStateOf("") }
 
     Column(modifier = modifier.padding(16.dp)) {
@@ -133,10 +145,12 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
             value = titleInput,
             onValueChange = { titleInput = it },
             label = { Text("Rätt eller vintips...") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = smakresaTextFieldColors()
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -144,21 +158,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
         ) {
             categories.forEach { category ->
                 val isSelected = selectedCategory == category
-                val (bgColor, textColor) = when (category) {
-                    "Kött" -> androidx.compose.ui.graphics.Color(0xFF7D8E74) to androidx.compose.ui.graphics.Color.White
-                    "Vin" -> androidx.compose.ui.graphics.Color(0xFF5D1A2B) to androidx.compose.ui.graphics.Color.White
-                    "Fisk" -> androidx.compose.ui.graphics.Color(0xFFD9C59A) to androidx.compose.ui.graphics.Color(0xFF3E352A)
-                    "Fågel" -> androidx.compose.ui.graphics.Color(0xFF7A5C38) to androidx.compose.ui.graphics.Color.White
-                    "Vego" -> androidx.compose.ui.graphics.Color(0xFFD6CFC7) to androidx.compose.ui.graphics.Color(0xFF3E352A)
-                    else -> androidx.compose.ui.graphics.Color(0xFFE5DEC9) to androidx.compose.ui.graphics.Color(0xFF3E352A)
-                }
+                val (bgColor, textColor) = getCategoryColors(category)
 
-                androidx.compose.material3.Surface(
+                Surface(
                     onClick = { selectedCategory = category },
                     shape = CircleShape,
                     color = bgColor,
                     border = if (isSelected) {
-                        androidx.compose.foundation.BorderStroke(2.5.dp, androidx.compose.ui.graphics.Color(0xFF2B2623))
+                        BorderStroke(2.5.dp, Color(0xFF2B2623))
                     } else null
                 ) {
                     Text(
@@ -170,7 +177,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                 }
             }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
+
         Button(
             onClick = {
                 if (titleInput.isNotBlank()) {
@@ -178,7 +187,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                     titleInput = ""
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF5D1A2B),
+                contentColor = Color.White
+            )
         ) {
             Text("Lägg till på smakresan")
         }
@@ -186,13 +199,17 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
         Spacer(modifier = Modifier.height(16.dp))
 
         val cookedCount = recipes.count { it.isCooked }
-        Text(text = "Avklarade: $cookedCount av ${recipes.size}")
+        Text(
+            text = "Avklarade: $cookedCount av ${recipes.size}",
+            color = Color(0xFF2B2623)
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         if (recipes.isEmpty()) {
             Text(
                 text = "Listan är tom. Skriv in en rätt eller ett vintips ovan för att komma igång!",
+                color = Color(0xFF3E352A),
                 modifier = Modifier.padding(top = 16.dp)
             )
         } else {
@@ -204,7 +221,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
 
                     Card(
                         onClick = { if (recipe.notes.isNotBlank()) isExpanded = !isExpanded },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(0xFFF2ECE1),
+                            contentColor = Color(0xFF2B2623)
+                        )
                     ) {
                         Row(
                             modifier = Modifier
@@ -214,25 +235,31 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                         ) {
                             Checkbox(
                                 checked = recipe.isCooked,
-                                onCheckedChange = { viewModel.toggleCooked(recipe.id) }
+                                onCheckedChange = { viewModel.toggleCooked(recipe.id) },
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = Color(0xFF5D1A2B),
+                                    uncheckedColor = Color(0xFF3E352A),
+                                    checkmarkColor = Color.White
+                                )
                             )
 
                             recipe.imageResId?.let { resId ->
-                                        Image(
-                                            painter = painterResource(id = resId),
-                                            contentDescription = recipe.title,
-                                            contentScale = ContentScale.Crop,
-                                            modifier = Modifier
-                                                .size(64.dp)
-                                                .clip(RoundedCornerShape(10.dp))
-                                        )
-                                        Spacer(modifier = Modifier.width(12.dp))
+                                Image(
+                                    painter = painterResource(id = resId),
+                                    contentDescription = recipe.title,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .size(64.dp)
+                                        .clip(RoundedCornerShape(10.dp))
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
                             }
 
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = recipe.title,
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color(0xFF2B2623)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 CategoryBadge(category = recipe.category)
@@ -240,10 +267,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                                 if (isExpanded && recipe.notes.isNotBlank()) {
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
-
                                         text = recipe.notes,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = Color(0xFF3E352A)
                                     )
                                 }
                             }
@@ -252,24 +278,25 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                                 Icon(
                                     imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                                     contentDescription = if (isExpanded) "Fäll ihop" else "Visa notering",
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                    tint = Color(0xFF3E352A)
                                 )
                             }
                             IconButton(onClick = {
                                 editingRecipe = recipe
                                 editTitleInput = recipe.title
-                                editCategoryInput = recipe.category
                                 editNotesInput = recipe.notes
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.Edit,
-                                    contentDescription = "Redigera"
+                                    contentDescription = "Redigera",
+                                    tint = Color(0xFF3E352A)
                                 )
                             }
                             IconButton(onClick = { viewModel.deleteRecipe(recipe.id) }) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
-                                    contentDescription = "Ta bort"
+                                    contentDescription = "Ta bort",
+                                    tint = Color(0xFF3E352A)
                                 )
                             }
                         }
@@ -281,44 +308,59 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
         editingRecipe?.let { recipeToEdit ->
             AlertDialog(
                 onDismissRequest = { editingRecipe = null },
-                title = { Text("Redigera rad") },
+                containerColor = Color(0xFFFBF8F3),
+                title = {
+                    Text(
+                        text = "Redigera rad",
+                        color = Color(0xFF2B2623)
+                    )
+                },
                 text = {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedTextField(
                             value = editTitleInput,
                             onValueChange = { editTitleInput = it },
-                            label = { Text("Nytt namn") }
+                            label = { Text("Nytt namn") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = smakresaTextFieldColors()
                         )
                         OutlinedTextField(
                             value = editNotesInput,
                             onValueChange = { editNotesInput = it },
                             label = { Text("Smaknoter / vintips") },
-                            minLines = 2
+                            minLines = 3,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = smakresaTextFieldColors()
                         )
-                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            categories.forEach { category ->
-                                FilterChip(
-                                    selected = editCategoryInput == category,
-                                    onClick = { editCategoryInput = category },
-                                    label = { Text(category) }
-                                )
-                            }
-                        }
                     }
                 },
                 confirmButton = {
                     Button(
                         onClick = {
-                            viewModel.editRecipe(recipeToEdit.id, editTitleInput, editCategoryInput, editNotesInput)
+                            viewModel.editRecipe(
+                                id = recipeToEdit.id,
+                                newTitle = editTitleInput,
+                                newCategory = recipeToEdit.category,
+                                newNotes = editNotesInput
+                            )
                             editingRecipe = null
                         },
-                        enabled = editTitleInput.isNotBlank()
+                        enabled = editTitleInput.isNotBlank(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF5D1A2B),
+                            contentColor = Color.White
+                        )
                     ) {
                         Text("Spara")
                     }
                 },
                 dismissButton = {
-                    TextButton(onClick = { editingRecipe = null }) {
+                    TextButton(
+                        onClick = { editingRecipe = null },
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = Color(0xFF3E352A)
+                        )
+                    ) {
                         Text("Avbryt")
                     }
                 }
@@ -326,17 +368,18 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     PatrikssmakresaTheme {
-        Greeting("Android")
+        Greeting()
     }
 }
 
 @Composable
 fun InstagramIcon() {
-    val iconColor = androidx.compose.material3.LocalContentColor.current
+    val iconColor = LocalContentColor.current
     Canvas(modifier = Modifier.size(22.dp)) {
         val strokeWidth = size.minDimension * 0.1f
         drawRoundRect(
@@ -357,17 +400,21 @@ fun InstagramIcon() {
     }
 }
 
+fun getCategoryColors(category: String): Pair<Color, Color> {
+    return when (category) {
+        "Kött" -> Color(0xFF7D8E74) to Color.White
+        "Vin" -> Color(0xFF5D1A2B) to Color.White
+        "Fisk" -> Color(0xFFD9C59A) to Color(0xFF3E352A)
+        "Fågel" -> Color(0xFF7A5C38) to Color.White
+        "Vego" -> Color(0xFFD6CFC7) to Color(0xFF3E352A)
+        else -> Color(0xFFE5DEC9) to Color(0xFF3E352A)
+    }
+}
+
 @Composable
 fun CategoryBadge(category: String) {
-    val (bgColor, textColor) = when (category) {
-        "Kött" -> androidx.compose.ui.graphics.Color(0xFF7D8E74) to androidx.compose.ui.graphics.Color.White
-        "Vin" -> androidx.compose.ui.graphics.Color(0xFF5D1A2B) to androidx.compose.ui.graphics.Color.White
-        "Fisk" -> androidx.compose.ui.graphics.Color(0xFFD9C59A) to androidx.compose.ui.graphics.Color(0xFF3E352A)
-        "Fågel" -> androidx.compose.ui.graphics.Color(0xFF7A5C38) to androidx.compose.ui.graphics.Color.White
-        "Vego" -> androidx.compose.ui.graphics.Color(0xFFD6CFC7) to androidx.compose.ui.graphics.Color(0xFF3E352A)
-        else -> androidx.compose.ui.graphics.Color(0xFFE5DEC9) to androidx.compose.ui.graphics.Color(0xFF3E352A)
-    }
-    androidx.compose.material3.Surface(
+    val (bgColor, textColor) = getCategoryColors(category)
+    Surface(
         color = bgColor,
         shape = RoundedCornerShape(6.dp)
     ) {
@@ -379,3 +426,18 @@ fun CategoryBadge(category: String) {
         )
     }
 }
+
+@Composable
+fun smakresaTextFieldColors() = OutlinedTextFieldDefaults.colors(
+    focusedBorderColor = Color(0xFF3E352A),
+    unfocusedBorderColor = Color(0xFFC5B9A8),
+    focusedLabelColor = Color(0xFF3E352A),
+    unfocusedLabelColor = Color(0xFF6E6256),
+    cursorColor = Color(0xFF5D1A2B),
+    focusedTextColor = Color(0xFF2B2623),
+    unfocusedTextColor = Color(0xFF2B2623),
+    selectionColors = TextSelectionColors(
+        handleColor = Color(0xFF5D1A2B),
+        backgroundColor = Color(0xFF5D1A2B).copy(alpha = 0.25f)
+    )
+)
