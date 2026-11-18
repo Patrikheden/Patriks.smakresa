@@ -22,6 +22,11 @@ import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.material3.TopAppBar
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Button
 
 data class RecipeItem(
     val id: String = UUID.randomUUID().toString(),
@@ -56,6 +61,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     var titleInput by remember { mutableStateOf("") }
+    val categories = listOf("Pizza", "Varmrätt", "Vin", "Övrigt")
+    var selectedCategory by remember { mutableStateOf("Pizza") }
+
     Column(modifier = modifier.padding(16.dp)) {
         OutlinedTextField(
             value = titleInput,
@@ -63,8 +71,31 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             label = { Text("Rätt eller vintips...") },
             modifier = modifier.padding(16.dp)
         )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            categories.forEach { category ->
+                FilterChip(
+                    selected = selectedCategory == category,
+                    onClick = { selectedCategory = category },
+                    label = { Text(category) }
+                )
+            }
+        }
+        Button(
+            onClick = {
+                if (titleInput.isNotBlank()) {
+                    titleInput = ""
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Lägg till på smakresan")
+        }
     }
 }
+
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
