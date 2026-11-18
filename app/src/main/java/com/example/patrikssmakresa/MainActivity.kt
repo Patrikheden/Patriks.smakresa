@@ -41,6 +41,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 
 data class RecipeItem(
     val id: String = UUID.randomUUID().toString(),
@@ -78,6 +81,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
     val categories = listOf("Pizza", "Varmrätt", "Vin", "Övrigt")
     var selectedCategory by remember { mutableStateOf("Pizza") }
     val recipes by viewModel.recipes.collectAsState()
+    var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
+    var editTitleInput by remember { mutableStateOf("") }
+    var editCategoryInput by remember { mutableStateOf("Pizza") }
 
     Column(modifier = modifier.padding(16.dp)) {
         OutlinedTextField(
@@ -116,34 +122,92 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(recipes, key = { it.id }) { recipe ->
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Checkbox(
-                            checked = recipe.isCooked,
-                            onCheckedChange = { viewModel.toggleCooked(recipe.id) }
-                        )
-                        Text(
-                            text = "${recipe.title} (${recipe.category})",
-                            modifier = Modifier.weight(1f)
-                        )
-                        IconButton(onClick = { viewModel.deleteRecipe(recipe.id) }) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Ta bort"
+        if (recipes.isEmpty()) {
+            Text(
+                text = "Listan är tom. Skriv in en rätt eller ett vintips ovan för att komma igång!",
+                modifier = Modifier.padding(top = 16.dp)
+            )
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(recipes, key = { it.id }) { recipe ->
+                    Card(modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Checkbox(
+                                checked = recipe.isCooked,
+                                onCheckedChange = { viewModel.toggleCooked(recipe.id) }
                             )
+                            Text(
+                                text = "${recipe.title} (${recipe.category})",
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(onClick = {
+                                editingRecipe = recipe
+                                editTitleInput = recipe.title
+                                editCategoryInput = recipe.category
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = "Redigera"
+                                )
+                            }
+                            IconButton(onClick = { viewModel.deleteRecipe(recipe.id) }) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Ta bort"
+                                )
+                            }
                         }
                     }
                 }
             }
+        }
+
+        editingRecipe?.let { recipeToEdit ->
+            AlertDialog(
+                onDismissRequest = { editingRecipe = null },
+                title = { Text("Redigera rad") },
+                text = {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedTextField(
+                            value = editTitleInput,
+                            onValueChange = { editTitleInput = it },
+                            label = { Text("Nytt namn") }
+                        )
+                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            categories.forEach { category ->
+                                FilterChip(
+                                    selected = editCategoryInput == category,
+                                    onClick = { editCategoryInput = category },
+                                    label = { Text(category) }
+                                )
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.editRecipe(recipeToEdit.id, editTitleInput, editCategoryInput)
+                            editingRecipe = null
+                        },
+                        enabled = editTitleInput.isNotBlank()
+                    ) {
+                        Text("Spara")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { editingRecipe = null }) {
+                        Text("Avbryt")
+                    }
+                }
+            )
         }
     }
 }
