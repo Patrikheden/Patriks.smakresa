@@ -12,6 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.patrikssmakresa.ui.theme.PatrikssmakresaTheme
+import java.util.UUID
+
+data class RecipeItem(
+    val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val category: String,
+    val isCooked: Boolean = false
+)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
