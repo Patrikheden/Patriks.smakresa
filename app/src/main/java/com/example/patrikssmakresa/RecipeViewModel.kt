@@ -64,16 +64,17 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
-    fun editRecipe(id: String, newTitle: String, newCategory: String) {
-        val trimmed = newTitle.trim()
-        if (trimmed.isEmpty()) return
-
+    fun editRecipe(id: String, newTitle: String, newCategory: String, newNotes: String) {
         _recipes.update { currentList ->
-            currentList.map { item ->
-                if (item.id == id) {
-                    item.copy(title = trimmed, category = newCategory)
+            currentList.map { recipe ->
+                if (recipe.id == id) {
+                    recipe.copy(
+                        title = newTitle,
+                        category = newCategory,
+                        notes = newNotes
+                    )
                 } else {
-                    item
+                    recipe
                 }
             }
         }

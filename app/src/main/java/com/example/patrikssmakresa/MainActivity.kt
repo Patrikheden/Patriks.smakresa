@@ -123,6 +123,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
     var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
     var editTitleInput by remember { mutableStateOf("") }
     var editCategoryInput by remember { mutableStateOf("Kött") }
+    var editNotesInput by remember { mutableStateOf("") }
 
     Column(modifier = modifier.padding(16.dp)) {
         OutlinedTextField(
@@ -227,6 +228,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                                 editingRecipe = recipe
                                 editTitleInput = recipe.title
                                 editCategoryInput = recipe.category
+                                editNotesInput = recipe.notes
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.Edit,
@@ -256,6 +258,12 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                             onValueChange = { editTitleInput = it },
                             label = { Text("Nytt namn") }
                         )
+                        OutlinedTextField(
+                            value = editNotesInput,
+                            onValueChange = { editNotesInput = it },
+                            label = { Text("Smaknoter / vintips") },
+                            minLines = 2
+                        )
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             categories.forEach { category ->
                                 FilterChip(
@@ -270,7 +278,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier, viewModel: RecipeViewM
                 confirmButton = {
                     Button(
                         onClick = {
-                            viewModel.editRecipe(recipeToEdit.id, editTitleInput, editCategoryInput)
+                            viewModel.editRecipe(recipeToEdit.id, editTitleInput, editCategoryInput, editNotesInput)
                             editingRecipe = null
                         },
                         enabled = editTitleInput.isNotBlank()
