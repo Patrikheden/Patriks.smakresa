@@ -70,6 +70,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.patrikssmakresa.ui.theme.PatrikssmakresaTheme
 import java.util.UUID
+import androidx.compose.foundation.clickable
 
 data class RecipeItem(
     val id: String = UUID.randomUUID().toString(),
@@ -77,7 +78,8 @@ data class RecipeItem(
     val category: String,
     val notes: String = "",
     val imageResId: Int? = null,
-    val isCooked: Boolean = false
+    val isCooked: Boolean = false,
+    val rating: Int = 0
 )
 
 class MainActivity : ComponentActivity() {
@@ -139,6 +141,7 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
     var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
     var editTitleInput by remember { mutableStateOf("") }
     var editNotesInput by remember { mutableStateOf("") }
+    var editRatingInput by remember { mutableStateOf(0) }
 
     Column(modifier = modifier.padding(16.dp)) {
         OutlinedTextField(
@@ -262,7 +265,19 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                                     color = Color(0xFF2B2623)
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
-                                CategoryBadge(category = recipe.category)
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    CategoryBadge(category = recipe.category)
+
+                                    StarRating(
+                                        rating = recipe.rating,
+                                        onRatingChange = { newRating ->
+                                            viewModel.setRating(recipe.id, newRating)
+                                        }
+                                    )
+                                }
 
                                 if (isExpanded && recipe.notes.isNotBlank()) {
                                     Spacer(modifier = Modifier.height(4.dp))
@@ -285,6 +300,7 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                                 editingRecipe = recipe
                                 editTitleInput = recipe.title
                                 editNotesInput = recipe.notes
+                                editRatingInput = recipe.rating
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.Edit,
@@ -329,8 +345,20 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                             onValueChange = { editNotesInput = it },
                             label = { Text("Smaknoter / vintips") },
                             minLines = 3,
+                            maxLines = 3,
                             modifier = Modifier.fillMaxWidth(),
                             colors = smakresaTextFieldColors()
+                        )
+                                    Text(
+                                    text = "Betygsätt receptet",
+                            color = Color(0xFF2B2623)
+                        )
+
+                        StarRating(
+                            rating = editRatingInput,
+                            onRatingChange = { newRating ->
+                                editRatingInput = newRating
+                            }
                         )
                     }
                 },
@@ -341,7 +369,8 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                                 id = recipeToEdit.id,
                                 newTitle = editTitleInput,
                                 newCategory = recipeToEdit.category,
-                                newNotes = editNotesInput
+                                newNotes = editNotesInput,
+                                newRating = editRatingInput
                             )
                             editingRecipe = null
                         },
@@ -364,6 +393,25 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                         Text("Avbryt")
                     }
                 }
+            )
+        }
+    }
+}
+@Composable
+fun StarRating(
+    rating: Int,
+    onRatingChange: (Int) -> Unit
+) {
+    Row {
+        for (star in 1..5) {
+            Text(
+                text = if (star <= rating) "★" else "☆",
+                color = Color(0xFFD6A83E),
+                modifier = Modifier
+                    .clickable {
+                        onRatingChange(star)
+                    }
+                    .padding(end = 4.dp)
             )
         }
     }
