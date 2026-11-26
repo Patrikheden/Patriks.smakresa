@@ -135,7 +135,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewModel()) {
     var titleInput by remember { mutableStateOf("") }
-    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Vego", "Övr")
+    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Vego", "Alla")
     var selectedCategory by remember { mutableStateOf("Kött") }
     val recipes by viewModel.recipes.collectAsState()
     var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
@@ -180,6 +180,7 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                 }
             }
         }
+
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -397,6 +398,7 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
         }
     }
 }
+
 @Composable
 fun StarRating(
     rating: Int,
