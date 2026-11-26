@@ -8,3 +8,12 @@
    <br>
    <br>
    Svar: Jag har använt lite olika hjälpmedel under arbetets gång. Bland annat Google, AI när jag kört fast, klasskamrat för att spåna lite ideér och gamla arbeten från kursen för att se hur vi gjort tidigare. Det har varit bra att kunna ta hjälp från olika håll. AI har nog hjälpt mig mest när jag inte förstått något eller inte vetat hur jag ska gå vidare. Även studieguiden att falla tillbaka på och följa
+<br>
+<br>
+
+<div align="center">
+
+<img width="350" height="700" alt="latest" src="https://github.com/user-attachments/assets/2895e75a-0a03-4431-b15a-a1c99967e0e8" />
+
+</div>
+
