@@ -135,8 +135,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewModel()) {
     var titleInput by remember { mutableStateOf("") }
-    val categories = listOf("Kött", "Fisk", "Fågel", "Vin", "Vego", "Alla")
-    var selectedCategory by remember { mutableStateOf("Kött") }
+    val categories = listOf("Alla", "Kött", "Fisk", "Fågel", "Vin", "Vego")
+    var selectedCategory by remember { mutableStateOf("Alla") }
     val recipes by viewModel.recipes.collectAsState()
     var editingRecipe by remember { mutableStateOf<RecipeItem?>(null) }
     var editTitleInput by remember { mutableStateOf("") }
@@ -154,16 +154,19 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             categories.forEach { category ->
                 val isSelected = selectedCategory == category
                 val (bgColor, textColor) = getCategoryColors(category)
 
                 Surface(
+                    modifier = Modifier.weight(1f),
                     onClick = { selectedCategory = category },
                     shape = CircleShape,
                     color = bgColor,
@@ -174,8 +177,13 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                     Text(
                         text = category,
                         color = textColor,
-                        style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp)
+                        style = MaterialTheme.typography.labelSmall,
+                        maxLines = 1,
+                        softWrap = false,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
                     )
                 }
             }
@@ -220,7 +228,12 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(recipes, key = { it.id }) { recipe ->
+                items(
+                    recipes.filter { recipe ->
+                        selectedCategory == "Alla" || recipe.category == selectedCategory
+                    },
+                    key = { it.id }
+                ) { recipe ->
                     var isExpanded by remember { mutableStateOf(false) }
 
                     Card(
