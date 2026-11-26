@@ -295,6 +295,137 @@ Gör så här:
                 category = "Vin",
                 notes = "Capitel de Roari Amarone della Valpolicella Classico från Luigi Righetti. Fylligt och smakrikt med mörka körsbär, torkad frukt och kryddiga toner. En riktigt härlig Amarone att njuta av i lugn och ro",
                 imageResId = R.drawable.vinamarone
+            ),
+            RecipeItem(
+                title = "Pilgrimsmusslor",
+                category = "Fisk",
+                notes = """
+        En lyxig förrätt med stekta pilgrimsmusslor, krämig Sandefjordsås, sparris, fänkål och regnbågsrom.
+
+        Ingredienser (2 portioner):
+        • 6–8 pilgrimsmusslor
+        • 1 liten fänkål
+        • 6–8 sparrisar
+        • 1 dl vispgrädde
+        • 75 g smör
+        • 1 msk crème fraîche
+        • 1–2 tsk citronjuice
+        • Dill
+        • 50–75 g regnbågsrom
+        • Olivolja
+        • Salt och svartpeppar
+
+        Gör så här:
+        1. Skär fänkålen tunt och sparrisen i mindre bitar. Koka sparrisen lätt och lägg fänkålen i kallt vatten. Pressa lite citron över fänkålen.
+        2. Koka upp grädden och låt reducera någon minut. Vispa ner crème fraîche och därefter smöret, lite i taget, tills såsen blir blank och krämig.
+        3. Smaka av Sandefjordsåsen med citron, salt och svartpeppar.
+        4. Torka pilgrimsmusslorna ordentligt. Salta lätt och stek i riktigt het panna med lite olivolja.
+        5. Lägg i en klick smör och stek musslorna tills de får en gyllene yta, cirka 1–2 minuter per sida.
+        6. Lägg fänkål och sparris i botten av tallriken. Häll över Sandefjordsåsen och toppa med pilgrimsmusslorna.
+        7. Avsluta generöst med regnbågsrom, färsk dill och några droppar dillolja.
+        8. Servera direkt!
+    """.trimIndent(),
+                imageResId = R.drawable.pilgrimsmusslor
+            ),
+            RecipeItem(
+                title = "Kyckling med paprikasås & ris",
+                category = "Fågel",
+                notes = """
+        Saftig kyckling med karamelliserad glaze, fluffigt ris och en riktigt len sås – ibland är det precis så här enkelt och gott man vill ha det.
+         Kyckling & glaze
+         600 g kycklingbröstfilé
+         1 msk neutral olja + 1 klick smör till stekning
+         1,5 msk japansk soja
+         1,5 msk flytande honung
+         1 vitlöksklyfta, finriven
+         Salt och nymalen svartpeppar
+         Krämig paprikasås
+         2,5 dl vispgrädde
+         1 dl crème fraîche
+         1,5 msk tomatpuré
+         1,5 tsk paprikapulver
+         1–2 tsk sriracha eller sambal oelek (efter smak)
+         1 msk koncentrerad kycklingfond
+         1 klick smör till fräsning
+         Salt och nymalen svartpeppar
+         Till servering
+         4 portioner jasmin- eller basmatiris
+         2–3 salladslökar, tunt skivade
+         Gör så här
+         Koka riset enligt anvisningarna på förpackningen.
+         Krydda kycklingfiléerna med salt och svartpeppar. Hetta upp olja och smör i en stekpanna på medelhög värme och stek kycklingen tills den fått en djup, gyllene stekyta på båda sidor.
+         Rör ihop soja, honung och riven vitlök. Sänk värmen, häll glazen i pannan och ös kycklingen medan den steker klart (till 70 °C innertemperatur) så att den får en blank, karamelliserad yta. Ta upp kycklingen och låt den vila i några minuter.
+         Fräs tomatpuré och paprikapulver hastigt i en klick smör i en kastrull. Vispa ner vispgrädde, crème fraîche, kycklingfond och sriracha. Låt såsen sjuda på svag värme i 5–7 minuter tills den tjocknar och blir slät och glansig. Smaka av med salt och peppar.
+         Skär kycklingen i tjocka skivor. Lägg upp riset i djupa tallrikar, häll den varma paprikasåsen runtom och placera kycklingen ovanpå riset. Toppa generöst med tunt skivad salladslök och servera direkt.
+    """.trimIndent(),
+                imageResId = R.drawable.kycklingris
+            ),
+            RecipeItem(
+                title = "Röding med vitvinssås, gurka & regnbågsrom",
+                category = "Fisk",
+                notes = """
+        Röding
+        600 g rödingfilé (gärna med skinn)
+        1 msk neutral olja + 25 g smör till stekning
+        Salt och nymalen svartpeppar
+        Vitvinssås
+        1 schalottenlök, finhackad
+        1,5 dl torrt vitt vin
+        1 msk koncentrerad fiskfond
+        2 dl vispgrädde
+        50 g kallt smör, tärnat
+        1–2 tsk färskpressad citronsaft
+        0,5 dl finhackad dill
+        Salt och nymalen svartpeppar
+        Tillbehör & topping
+        0,5 gurka, skalad, urkärnad och fint tärnad
+        0,5 dl hasselnötter, rostade och grovhackade
+        75 g regnbågsrom
+        Färsk dill
+        Gör så här
+        Rosta hasselnötterna i en torr stekpanna tills de får fin färg, gnugga bort skalet och grovhacka dem. Skala gurkan, gröp ur kärnhuset och skär i små, jämna tärningar.
+        Fräs schalottenlöken mjuk i en klick smör i en kastrull utan att den tar färg. Häll på vitt vin och fiskfond och låt reducera tills ungefär hälften återstår.
+        Tillsätt vispgrädden och låt såsen sjuda i cirka 5 minuter. Sila eventuellt bort löken, vispa ner det kalla smöret lite i taget och mixa gärna såsen hastigt med stavmixer så den blir luftig. Smaka av med citronsaft, salt och svartpeppar och rör ner finhackad dill.
+        Krydda rödingen med salt och svartpeppar. Hetta upp olja i en stekpanna och stek fisken med skinnsidan nedåt på medelhög värme i cirka 3–4 minuter tills skinnet är krispigt. Lägg i smöret, ös fisken och vänd den hastigt de sista 30 sekunderna tills innertemperaturen når 48–50 °C.
+        Fördela gurka och hasselnötter i djupa tallrikar och skeda över den varma vitvinssåsen. Lägg på rödingen och toppa generöst med regnbågsrom och färsk dill. Servera direkt!
+    """.trimIndent(),
+                imageResId = R.drawable.roding
+            ),
+            RecipeItem(
+                title = "Karamelliserade morötter och fetaostkräm",
+                category = "Vego",
+                notes = """
+       Karamelliserade morötter på vispad fetaostkräm
+       
+4 portioner (som förrätt eller tillbehör)
+500–600 g morötter
+2 msk olivolja
+1,5 msk flytande honung
+1 tsk torkad timjan
+Flingsalt och nymalen svartpeppar
+Vispad fetaostkräm
+150 g fetaost
+1,5 dl turkisk eller grekisk yoghurt (10 %)
+1 liten vitlöksklyfta, finriven
+1 tsk färskpressad citronsaft
+Nymalen svartpeppar
+Topping
+2–3 msk extra virgin olivolja
+1 tsk torkad timjan
+Färsk dill
+
+Gör så här
+Sätt ugnen på 225 °C (gärna varmluft). Skala morötterna och dela dem på längden i halvor eller kvartar så att bitarna är ungefär lika tjocka.
+Lägg morötterna på en plåt med bakplåtspapper. Ringla över olivolja och honung och krydda med torkad timjan, flingsalt och svartpeppar. Vänd runt ordentligt och lägg dem med snittytan nedåt.
+Rosta i mitten av ugnen i 20–25 minuter tills morötterna är mjuka rakt igenom och har fått en djup, karamelliserad och lätt rostad yta.
+Mixa fetaost, yoghurt, riven vitlök, citronsaft och svartpeppar med stavmixer eller i matberedare tills krämen är slät och luftig.
+Bred ut fetaostkrämen i ett generöst lager på ett fat eller en tallrik och lägg de varma morötterna ovanpå.
+Ringla ordentligt med olivolja runt kanten av krämen, strö över torkad timjan och toppa med färska dillvippor direkt före servering.
+    """.trimIndent(),
+                imageResId = R.drawable.morotter
+
+
+
             )
         )
     )

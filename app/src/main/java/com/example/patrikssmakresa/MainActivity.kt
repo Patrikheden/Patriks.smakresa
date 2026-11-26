@@ -260,17 +260,19 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: RecipeViewModel = viewMod
                                 )
                             )
 
-                            recipe.imageResId?.let { resId ->
-                                Image(
-                                    painter = painterResource(id = resId),
-                                    contentDescription = recipe.title,
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .size(64.dp)
-                                        .clip(RoundedCornerShape(10.dp))
-                                )
-                                Spacer(modifier = Modifier.width(12.dp))
-                            }
+                            val imageResId = recipe.imageResId ?: R.drawable.tallrik
+
+                            Image(
+                                painter = painterResource(id = imageResId),
+                                contentDescription = recipe.title,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(64.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                            )
+
+                            Spacer(modifier = Modifier.width(12.dp))
+
 
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
